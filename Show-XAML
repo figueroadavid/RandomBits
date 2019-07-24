@@ -1,0 +1,38 @@
+function Show-Xaml
+{
+	[cmdletbinding()]
+	param(
+		[parameter(Mandatory = $true, ValueFromPipeLineByPropertyName = $true, HelpMessage = 'The path to the XAML file to run')]
+		[ValidateScript({Test-Path -path $_})]
+		[string]$FilePath 
+	)
+
+	Add-Type -AssemblyName PresentationFramework -ErrorAction SilentlyContinue
+	Add-Type -AssemblyName PresentationCore -ErrorAction SilentlyContinue
+	Add-Type -AssemblyName WindowsBase -ErrorAction SilentlyContinue
+
+	$xaml = New-Object -TypeName XML
+	$xaml.Load($FilePath)
+	$xaml.Window.RemoveAttribute('x:Class')
+	$xaml.Window.RemoveAttribute('mc:Ignorable')
+
+	$reader = [System.Xml.XmlNodeReader]::new($xaml)
+	$Window = [Windows.Markup.XAMLReader]::Load($reader)
+
+	<#
+	$nodes = $xaml.SelectNodes("//*[@*[contains(translate(name(.),'n','N'),'Name')]]") 
+	
+	foreach ($node in $nodes)
+	{
+		if (Test-Path Variable:\$($node.name))
+		{
+			Write-Verbose -Message "Variable $($node.name) exists"
+		}
+		else
+		{
+			New-Variable -Name $node.Name -Value ($Window.FindName($node.name))
+		}
+	}
+	#>
+	$null = $Window.ShowDialog()
+}
