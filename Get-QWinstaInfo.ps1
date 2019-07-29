@@ -60,7 +60,7 @@ function Get-QWinstaInfo {
                     IsInteractive = $matches.Interactive -as [bool]
                     SessionName   = $matches.SessionName
                     UserName      = $matches.UserName
-                    ID            = $matches.ID
+                    ID            = [int]$matches.ID
                     State         = $matches.State
                     Type          = $matches.Type
                     Device        = $matches.Device
@@ -79,7 +79,7 @@ function Get-QWinstaInfo {
                 IsInteractive = 'NOT_AVAILABLE'
                 SessionName   = 'NOT_AVAILABLE'
                 UserName      = 'NOT_AVAILABLE'
-                ID            = 'NOT_AVAILABLE'
+                ID            = [int]-1
                 State         = 'NOT_AVAILABLE'
                 Type          = 'NOT_AVAILABLE'
                 Device        = 'NOT_AVAILABLE'
