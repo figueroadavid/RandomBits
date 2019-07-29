@@ -4,8 +4,6 @@ function Get-QWinstaInfo {
         Retrieves the qwinsta.exe output and provides is as objects
     .DESCRIPTION
         Parses the output of qwinsta.exe and converts it to PSObjects (PS2) or PSCustomObjects (PS3+)
-    .EXAMPLE
-        PS C:\> Get-QWinstaInfo -ComputerName Server1,Server2,Server99 | Select-Object -Property ComputerName,IsInteractive,SessionName,UserName,ID,State,Type,Device | format-Table
     .PARAMETER ComputerName
         The name(s) of the computer(s) to retrieve information from
     .EXAMPLE
